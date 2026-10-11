@@ -1,0 +1,8 @@
+Activity_Name,total_events,unique_patients
+Doctor Consultation,256,200
+Triage,256,200
+Discharge,200,200
+Treatment,200,200
+Registration,200,200
+X-Ray,135,135
+Lab Test,118,118
