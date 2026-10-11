@@ -34,3 +34,24 @@ unexpected = sorted(
 print("Unexpected activities:", unexpected)
 
 print("\nValidation check complete.")
+
+# Check required columns
+required_columns = ["Case_ID", "Activity_Name", "Timestamp"]
+missing_columns = [
+    col for col in required_columns if col not in df.columns
+]
+print("Missing required columns:", missing_columns)
+
+# Check chronological order within each patient
+ordered_df = df.sort_values(["Case_ID", "Timestamp"])
+time_differences = ordered_df.groupby("Case_ID")["Timestamp"].diff()
+
+out_of_order = (time_differences < pd.Timedelta(0)).sum()
+print("Chronological ordering violations:", out_of_order)
+
+# Check whether any patient IDs are blank
+blank_patient_ids = (
+    df["Case_ID"].isna()
+    | df["Case_ID"].astype(str).str.strip().eq("")
+).sum()
+print("Blank patient IDs:", blank_patient_ids)
